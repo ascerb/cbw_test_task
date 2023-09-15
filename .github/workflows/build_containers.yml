@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  release:
+    types: [published]
+  
+    workflow_dispatch:    
+    
+jobs:
+
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - name: publish
+      uses: pennsignals/publish_docker-compose@v0.2.6-rc.1
+      with:
+        #version: '0.1.0' # optional
+        docker_compose: 'docker-compose.yml' # required
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"    
+
+

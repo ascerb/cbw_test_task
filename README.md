@@ -19,13 +19,13 @@
 
 
 ### Run on local
-Type into terminal
+Type into terminal:
 
 ```bash
 git clone git@github.com:ascerb/cbw_test_task.git
 cd cbw_test_task
 docker compose -f docker-compose.yml build --build-arg FILE_PWD="cbw"
-docker compose -f docker-compose.yml  up
+docker compose -f docker-compose.yml up
 ```
 
 Open [http://localhost:3000](http://localhost:3000) 
