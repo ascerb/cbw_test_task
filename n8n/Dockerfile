@@ -1,6 +1,9 @@
 FROM docker.n8n.io/n8nio/n8n
 
-LABEL "name"="cbw_n8n"
+LABEL name="cbwn8n"
+
+RUN echo "---------------[n8n dockerfile start]---------------"
+
 
 WORKDIR .
 
@@ -32,7 +35,7 @@ RUN cd /home/node/.n8n && unzip n8n_data_nopwd.zip
 RUN cd /home/node/.n8n && rm *.zip
 
 
-
+RUN echo "---------------[n8n dockerfile end]---------------"
 
 
 

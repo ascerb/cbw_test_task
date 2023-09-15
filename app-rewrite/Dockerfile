@@ -1,6 +1,8 @@
 FROM node:18-alpine
 
-LABEL "name"="cbw_app"
+LABEL name="cbwapp"
+
+RUN echo "---------------[app-rewrite dockerfile start]---------------"
 
 WORKDIR /app
 
@@ -41,7 +43,10 @@ RUN npm install
 # Uncomment the following line to disable telemetry at run time
 # ENV NEXT_TELEMETRY_DISABLED 1
 
+
+
 # Note: Don't expose ports here, Compose will handle that for us
+
 
 
 # Start Next.js in development mode based on the preferred package manager
@@ -51,3 +56,5 @@ CMD \
   elif [ -f pnpm-lock.yaml ]; then pnpm dev; \
   else yarn dev; \
   fi
+
+RUN echo "---------------[app-rewrite dockerfile end]---------------"
