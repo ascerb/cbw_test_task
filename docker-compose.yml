@@ -1,4 +1,4 @@
-version: '3'
+version: "3.8"
 
 services:
 
@@ -31,10 +31,15 @@ services:
 #    restart: always
     ports:
       - 5678:5678
+    depends_on:
+      - apprewrite      
 #    networks:
 #      - my_network
 
-   app-rewrite:
+
+
+
+   apprewrite:
     container_name: cbw_app
     build:
       context: ./app-rewrite
@@ -56,9 +61,7 @@ services:
       - 3000:3000
 #    networks:
 #      - my_network
-    
-    depends_on:
-      - n8n
+
 
   # Add more containers below (nginx, postgres, etc.)
   
@@ -74,6 +77,6 @@ services:
 
 # Define a network, which allows containers to communicate
 # with each other, by using their container name as a hostname
-networks:
-  my_network:
-    external: true
+#networks:
+#  my_network:
+#    external: true
