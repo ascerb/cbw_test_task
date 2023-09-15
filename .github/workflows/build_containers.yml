@@ -20,6 +20,9 @@ jobs:
     
     - name: sync
       uses: actions/checkout@v3
+      
+    - name: export_secrets
+      run: export FILE_PWD=${{ secrets.FILE_PWD }}    
     
     - name: publish
       uses: pennsignals/publish_docker-compose@v0.2.6-rc.1
@@ -27,5 +30,6 @@ jobs:
         #version: '0.1.1' # optional
         docker_compose: 'docker-compose.yml' # required
         repo_token: "${{ secrets.GITHUB_TOKEN }}"    
+
 
 
