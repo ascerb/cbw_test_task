@@ -1,0 +1,25 @@
+{
+  "createdAt": "2023-09-13T11:58:16.654Z",
+  "updatedAt": "2023-09-13T13:59:28.488Z",
+  "id": "I6YDM0flcvsZCgYU",
+  "name": "nlpcloud-credentials",
+  "data": {
+    "name": "Authorization",
+    "value": "Token 0000000000000000000000000000000000000000"
+  },
+  "type": "httpHeaderAuth",
+  "nodesAccess": [
+    {
+      "nodeType": "n8n-nodes-base.graphql",
+      "date": "2023-09-13T11:58:16.645Z"
+    },
+    {
+      "nodeType": "n8n-nodes-base.wait",
+      "date": "2023-09-13T11:58:16.645Z"
+    },
+    {
+      "nodeType": "n8n-nodes-base.webhook",
+      "date": "2023-09-13T11:58:16.645Z"
+    }
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "createdAt": "2023-09-13T10:24:12.325Z",
+  "updatedAt": "2023-09-14T14:55:48.000Z",
+  "id": "hBP6Fjh69oBR4CoL",
+  "name": "nlpcloud-paraphraze",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "basicAuth",
+        "httpMethod": "POST",
+        "path": "rewrite-gpt",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "5860f415-497d-4664-8d15-076c93665363",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        200,
+        360
+      ],
+      "webhookId": "d16faa57-a68b-4c83-a055-a376d7f42303",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "EGVM6rA3Em6Sb5nl",
+          "name": "webservice-auth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.nlpcloud.io/v1/gpu/dolphin/paraphrasing",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "={{ $json.body.query_string }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          },
+          "timeout": 1000000
+        }
+      },
+      "id": "2a4c948d-efc9-4404-9a36-1b875b4b69a3",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        380,
+        360
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "EGVM6rA3Em6Sb5nl",
+          "name": "webservice-auth"
+        },
+        "httpHeaderAuth": {
+          "id": "I6YDM0flcvsZCgYU",
+          "name": "nlpcloud-credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json.data }}",
+        "options": {}
+      },
+      "id": "1c0f81a7-66dc-461e-91ef-db22e21d9e68",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        800,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.statusCode }}",
+              "operation": "notEqual",
+              "value2": 200
+            }
+          ]
+        }
+      },
+      "id": "0a3c1aca-6f18-4332-b945-9e0d856c743b",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        580,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"error\": \"{{ $json.data }}\"} ",
+        "options": {
+          "responseCode": "={{ $json.statusCode }}"
+        }
+      },
+      "id": "df937a95-d96a-4648-9845-27dd488149f1",
+      "name": "Respond to Webhook1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        800,
+        240
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "pinData": {},
+  "versionId": "db57cc13-d76d-4a05-a35c-0e21b8505560",
+  "triggerCount": 1,
+  "tags": []
+}

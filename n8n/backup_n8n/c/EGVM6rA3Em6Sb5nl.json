@@ -1,0 +1,29 @@
+{
+  "createdAt": "2023-09-13T10:29:23.147Z",
+  "updatedAt": "2023-09-13T13:59:15.277Z",
+  "id": "EGVM6rA3Em6Sb5nl",
+  "name": "webservice-auth",
+  "data": {
+    "user": "cbw",
+    "password": "pass"
+  },
+  "type": "httpBasicAuth",
+  "nodesAccess": [
+    {
+      "nodeType": "n8n-nodes-base.graphql",
+      "date": "2023-09-13T10:29:23.142Z"
+    },
+    {
+      "nodeType": "n8n-nodes-base.pipedriveTrigger",
+      "date": "2023-09-13T10:29:23.142Z"
+    },
+    {
+      "nodeType": "n8n-nodes-base.wait",
+      "date": "2023-09-13T10:29:23.142Z"
+    },
+    {
+      "nodeType": "n8n-nodes-base.webhook",
+      "date": "2023-09-13T10:29:23.142Z"
+    }
+  ]
+}
