@@ -1,5 +1,7 @@
 FROM node:18-alpine
 
+LABEL "name"="cbw_app"
+
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
@@ -24,7 +26,7 @@ COPY next.config.js .
 COPY postcss.config.js .
 COPY .eslintrc.json .
 COPY tsconfig.json .
-COPY next-env.d.ts .
+#COPY next-env.d.ts .
 COPY tailwind.config.ts .
 
 
