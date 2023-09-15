@@ -2,6 +2,8 @@
 
 FROM docker.n8n.io/n8nio/n8n
 
+LABEL "name"="cbw_n8n"
+
 WORKDIR .
 
 ARG FILE_PWD
