@@ -26,7 +26,7 @@ jobs:
     
     - name: publish to registry
       #uses: pennsignals/publish_docker-compose@v0.2.6-rc.1
-      uses: mikekutzma/publish_docker-compose@v0.0.4
+      uses: ascerb/publish_docker-compose@0.0.1
       with:
         #version: '0.1.1' # optional
         docker_compose: 'docker-compose.yml' # required
