@@ -18,14 +18,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     
-    - name: sync
+    - name: sync src
       uses: actions/checkout@v3
       
-    - name: export_secrets
+    - name: export secrets
       run: export FILE_PWD=${{ secrets.FILE_PWD }}    
     
-    - name: publish
-      uses: pennsignals/publish_docker-compose@v0.2.6-rc.1
+    - name: publish to registry
+      #uses: pennsignals/publish_docker-compose@v0.2.6-rc.1
+      uses: mikekutzma/publish_docker-compose@v0.0.4
       with:
         #version: '0.1.1' # optional
         docker_compose: 'docker-compose.yml' # required
