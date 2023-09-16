@@ -47,7 +47,7 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
 
-    - name: version figure out
+    - name: figure out version and pull
       run: |
         # Tagged release
         if [[ ${GITHUB_REF} == refs/tags/* ]]; then
@@ -60,24 +60,11 @@ jobs:
         fi
         echo "PULLING VERSION:"
         echo "$VERSION"
-        
-        
-
-    - name: connect to remote
-      run: |
-        ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "ls && exit 0"
-       
-       
-    - name: pull images
-      run: |
+        # Pulling images *** TO REMAKE ***
         ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker pull ghcr.io/ascerb/cbw_test_task/cbw_test_task.n8n:$VERSION && docker pull ghcr.io/ascerb/cbw_test_task/cbw_test_task.app:$VERSION && exit 0"
-    
-    - name: stop and remove services
-      run: |    
+        # Stopping services
         ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker stop cbw_app && docker stop cbw_n8n && docker rm cbw_app && docker rm cbw_n8n && exit 0"        
-    
-    - name: start services
-      run: |    
+        # Starting services
         ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker run -dt --restart=always -p 5678:5678 --name cbw_n8n ghcr.io/ascerb/cbw_test_task/cbw_test_task.n8n:$VERSION && docker run -dt --restart=always -p 3000:3000 --name cbw_app ghcr.io/ascerb/cbw_test_task/cbw_test_task.app:$VERSION && exit 0"        
         
     
