@@ -24,9 +24,9 @@ Contains n8n workflow rules and secrets. User data is populated from password ar
 n8n without owner registration on each new instance can not activate any workflow via cli. 
 Cli workflow activation is not working at all actually.
 
-Here are some examples next, not used on project.
+Here are some examples below, not used on project.
 
-Export n8n data to docker host (runs from docker host):
+Export n8n data to docker host (typed from docker host):
 ```bash
 ### n8n EXPORT
 docker exec -u node -it cbw_n8n n8n export:workflow --backup --output=backup_n8n/w
@@ -42,11 +42,11 @@ docker exec -u node -it cbw_n8n n8n import:workflow --separate --input=/home/nod
 docker exec -u node -it cbw_n8n n8n import:credentials --separate --input=/home/node/backup_n8n/c
 docker exec -u node -it cbw_n8n rm -rf /home/node/backup_n8n
 
-### ---> THIS IS NOT WORKING. Workflows are not activated from cli
+### ---> THIS IS NOT WORKING. Workflows could not be activated from cli
 docker exec -u node -it cbw_n8n n8n update:workflow --all --active=true
 ```
 
-Project has one n8n workflow and to password credentials:
+Project has one n8n workflow and two password credentials:
 * basic auth to internal api
 * NLPCloud api key
 
