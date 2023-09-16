@@ -34,3 +34,37 @@ jobs:
 
 
 
+  deploy:
+    runs-on: ubuntu-latest
+    needs: publish
+     
+    steps:
+    - name: install ssh keys
+      # check this thread to understand why its needed:
+      # https://stackoverflow.com/a/70447517
+      run: |
+        install -m 600 -D /dev/null ~/.ssh/id_rsa
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
+
+    - name: version figure out
+      run: |
+        # Tagged release
+        if [[ ${GITHUB_REF} == refs/tags/* ]]; then
+            # Strip git ref prefix from $VERSION
+            TAGNAME=$(echo "${GITHUB_REF}" | sed -e 's,.*/\(.*\),\1,')
+            # Strip "v" prefix from tag name
+            VERSION=$(echo $TAGNAME | sed -e 's/^v//')
+        else
+            VERSION=${GITHUB_SHA}
+        fi
+        echo "PULLING VERSION:"
+        echo "$VERSION"
+        
+        
+
+    - name: connect to remote and pull
+      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p {{ secrets.SSH_PORT }}  "docker pull ghcr.io/ascerb/cbw_test_task/cbw_test_task.n8n:$VERSION && docker pull ghcr.io/ascerb/cbw_test_task/cbw_test_task.app:$VERSION && docker stop cbw_app && docker stop cbw_n8n && docker rm cbw_app && docker rm cbw_n8n && docker run -dt --restart=always -p 5678:5678 --name cbw_n8n && ghcr.io/ascerb/cbw_test_task/cbw_test_task.n8n:$VERSION && docker run -dt --restart=always -p 3000:3000 --name cbw_app && ghcr.io/ascerb/cbw_test_task/cbw_test_task.app:$VERSION && exit"
+    
+    - name: cleanup
+      run: rm -rf ~/.ssh
