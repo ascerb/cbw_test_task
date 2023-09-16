@@ -61,11 +61,11 @@ jobs:
         echo "PULLING VERSION:"
         echo "$VERSION"
         # Pulling images *** TO REMAKE ***
-        ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker pull ghcr.io/ascerb/cbw_test_task/cbw_test_task.n8n:$VERSION && docker pull ghcr.io/ascerb/cbw_test_task/cbw_test_task.app:$VERSION && exit 0"
+        ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker pull ghcr.io/${{ GITHUB_REPOSITORY }}/cbw_test_task.n8n:$VERSION && docker pull ghcr.io/${{ GITHUB_REPOSITORY }}/cbw_test_task.app:$VERSION && exit 0"
         # Stopping services
         ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker stop cbw_app || true && docker stop cbw_n8n || true && docker rm cbw_app || true && docker rm cbw_n8n || true && exit 0"        
         # Starting services
-        ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker run -dt --restart=always -p 5678:5678 --name cbw_n8n ghcr.io/ascerb/cbw_test_task/cbw_test_task.n8n:$VERSION && docker run -dt --restart=always -p 3000:3000 --name cbw_app ghcr.io/ascerb/cbw_test_task/cbw_test_task.app:$VERSION && exit 0"        
+        ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker run -dt --restart=always -p 5678:5678 --name cbw_n8n ghcr.io/${{ GITHUB_REPOSITORY }}/cbw_test_task.n8n:$VERSION && docker run -dt --restart=always -p 3000:3000 --name cbw_app ghcr.io/${{ GITHUB_REPOSITORY }}/cbw_test_task.app:$VERSION && exit 0"        
         
     
     
