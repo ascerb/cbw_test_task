@@ -73,7 +73,7 @@ Open [http://localhost:3000](http://localhost:3000)
 
 # Deploy via GitHub Actions
 
-On each release docker containers are generated via docker compose and both packages uploaded to GitHub Registry, deployed and started on remote server.
+On each release (and commit - for a while for testing purposes(?)) docker containers are generated via docker compose and both packages uploaded to GitHub Registry, deployed and started on remote server.
 
 To upload packages via GitHub actions to your server please type on target machine:
 ```
