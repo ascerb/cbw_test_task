@@ -8,13 +8,10 @@ services:
       context: ./n8n
       dockerfile: Dockerfile
       
-      
       ### alternative:
       ### docker compose build  --build-arg FILE_PWD="cbw"
       args:
        - FILE_PWD=cbw
-        
-        
         
     env_file:
       - .env      
@@ -24,7 +21,6 @@ services:
       ENV_VARIABLE: ${ENV_VARIABLE}
       NEXT_PUBLIC_ENV_VARIABLE: ${NEXT_PUBLIC_ENV_VARIABLE}
       
-
 #    volumes:
 #      - ./app-rewrite/src:/app/src
 #      - ./app-rewrite/public:/app/public
@@ -62,11 +58,6 @@ services:
 #    networks:
 #      - my_network
 
-
-  # Add more containers below (nginx, postgres, etc.)
-  
-  
-  
   
   
   

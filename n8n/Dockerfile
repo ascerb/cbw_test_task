@@ -1,6 +1,6 @@
 FROM docker.n8n.io/n8nio/n8n
 
-LABEL name="cbwn8n"
+LABEL name="n8n"
 
 RUN echo "---------------[n8n dockerfile start]---------------"
 

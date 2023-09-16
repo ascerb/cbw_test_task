@@ -1,6 +1,6 @@
 FROM node:18-alpine
 
-LABEL name="cbwapp"
+LABEL name="app"
 
 RUN echo "---------------[app-rewrite dockerfile start]---------------"
 
